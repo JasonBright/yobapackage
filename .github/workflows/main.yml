@@ -15,16 +15,14 @@ jobs:
         node-version: '12.x'
         registry-url: 'https://npm.pkg.github.com'
         scope: '@octocat' # Defaults to the user or organization that owns the workflow file
-    - run: npm publish --registry=https://npm.pkg.github.com
-      working-directory: 'Assets/yoba'
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
-        
     - name:  'Automated Version Bump'
       uses:  'phips28/gh-action-bump-version@master'
       env:
         GITHUB_TOKEN: ${{ secrets.YOBA }}
         PACKAGEJSON_DIR:  'Assets/yoba'
       with:
-        
         commit-message: 'CI: bumps version to {{version}} [skip ci]'
+    - run: npm publish --registry=https://npm.pkg.github.com
+      working-directory: 'Assets/yoba'
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
