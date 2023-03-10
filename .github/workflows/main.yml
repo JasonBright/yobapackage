@@ -21,11 +21,24 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@JasonBright'
           
+      - name: Setup SSH Keys
+                env:
+                    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+                run: |
+                    mkdir -p ~/.ssh
+                    ssh-keyscan github.com >> ~/.ssh/known_hosts
+                    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+                    ssh-add - <<< "${{ secrets.YOBA }}"
+
+            -   name: Some task that fetches dependencies
+                env:
+                    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+                run: ./fetch-deps.sh    
+          
       - name: Install jq
         run: |
           sudo apt-get update
           sudo apt-get install jq
-          git config --global --add url."https://${{ secrets.YOBA }}@github.com/".insteadOf "https://github.com/"
   
       - name: Find package.json
         run: cd Assets; package="$(find . -type f -name package.json | head -n 1 | sed 's/\./Assets/')"; echo "package=$package" >> $GITHUB_ENV
