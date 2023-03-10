@@ -23,3 +23,10 @@ jobs:
       working-directory: env.package_dir
       env:
         NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
+        
+    - name:  'Automated Version Bump'
+      uses:  'jasonbright/yobapackage@master'
+      env:
+        GITHUB_TOKEN: ${{ secrets.YOBA }}
+      with:
+        commit-message: 'CI: bumps version to {{version}} [skip ci]'
