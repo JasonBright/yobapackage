@@ -7,7 +7,7 @@ public class JaYobaScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log( $"blyat " );   
+        Debug.Log( $"blyat  " );   
     }
 
     // Update is called once per frame
