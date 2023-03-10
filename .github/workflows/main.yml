@@ -25,6 +25,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install jq
+          git config --global --add url."https://${{ secrets.YOBA }}@github.com/".insteadOf "https://github.com/"
   
       - name: Find package.json
         run: cd Assets; package="$(find . -type f -name package.json | head -n 1 | sed 's/\./Assets/')"; echo "package=$package" >> $GITHUB_ENV
