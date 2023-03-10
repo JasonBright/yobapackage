@@ -16,6 +16,6 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
         scope: '@octocat' # Defaults to the user or organization that owns the workflow file
     - run: npm publish
-      working-directory: ''
+      working-directory: 'Assets/yoba'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
