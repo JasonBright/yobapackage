@@ -33,3 +33,5 @@ jobs:
         run: package_dir="$(dirname "${{ env.package }}")"; echo "package_dir=$package_dir" >> $GITHUB_ENV;
       - name: Publish
         run: npm publish "${{ env.package_dir }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
