@@ -5,7 +5,7 @@ on:
     branches: [main]
     
 env:
-  NODE_AUTH_TOKEN: ${{secrets.yoba}}
+  NODE_AUTH_TOKEN: ${{secrets.YOBA}}
 
 jobs:
   package:
