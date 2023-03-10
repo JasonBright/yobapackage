@@ -15,10 +15,6 @@ jobs:
         node-version: '12.x'
         registry-url: 'https://npm.pkg.github.com'
         scope: '@octocat' # Defaults to the user or organization that owns the workflow file
-    - name: Find package.json
-        run: cd Assets; package="$(find . -type f -name package.json | head -n 1 | sed 's/\./Assets/')"; echo "package=$package" >> $GITHUB_ENV
-    - name: Get package directory
-        run: package_dir="$(dirname "${{ env.package }}")"; echo "package_dir=$package_dir" >> $GITHUB_ENV;
     - run: npm publish --registry=https://npm.pkg.github.com
       working-directory: env.package_dir
       env:
