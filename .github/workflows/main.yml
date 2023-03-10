@@ -1,37 +1,21 @@
-name: Publish
-
-on:
+name: Publish Package
+on: 
   push:
-    branches: [main]
-    
-env:
-  NODE_AUTH_TOKEN: ${{secrets.YOBA}}
-
+    branches:
+      - main
+      
 jobs:
-  package:
-    permissions:
-      packages: write
-      contents: read
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-          scope: '@JasonBright'   
-          
-      - name: Install jq
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
-  
-      - name: Find package.json
-        run: cd Assets; package="$(find . -type f -name package.json | head -n 1 | sed 's/\./Assets/')"; echo "package=$package" >> $GITHUB_ENV
-          
-      - name: Get package directory
-        run: package_dir="$(dirname "${{ env.package }}")"; echo "package_dir=$package_dir" >> $GITHUB_ENV;
-      - name: Publish
-        run: npm publish "${{ env.package_dir }}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
+    - uses: actions/checkout@v3
+    # Setup .npmrc file to publish to GitHub Packages
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@octocat' # Defaults to the user or organization that owns the workflow file
+    - run: npm publish
+      working-directory: ''
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.YOBA }}
